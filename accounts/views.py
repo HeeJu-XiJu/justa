@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 def signup(request):
@@ -14,3 +15,8 @@ def signup(request):
         'form': form, 
     }
     return render(request, 'accounts_form.html', context)
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('posts:index')
