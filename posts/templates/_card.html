@@ -2,6 +2,7 @@
     <div class="card-header">
         <img src="{{ post.user.profile.url }}" alt="" class="rounded-circle" width="30px">
         {{ post.user }}
+        <a href="{% url 'posts:update' id=post.id %}" class="btn btn-light">update</a>
     </div>
     <img src="{{ post.image.url }}" alt="">
     <div class="card-body">
