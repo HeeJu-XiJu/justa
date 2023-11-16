@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import PostForm
-from .models import Post
+from .forms import PostForm, CommentForm
+from .models import Post, Comment
 
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
+    commentform = CommentForm()
     context = {
         'posts': posts,
+        'commentform': commentform,
     }
     return render(request, 'index.html', context)
 
@@ -47,4 +49,15 @@ def update(request, id):
 def delete(request, id):
     post = Post.objects.get(id=id)
     post.delete()
+    return redirect('posts:index')
+
+
+def comment_create(request,post_id):
+    content = request.POST.get('comment')
+
+    comment = Comment()
+    comment.content = content
+    comment.user_id = request.user.id
+    comment.post_id = post_id
+    comment.save()
     return redirect('posts:index')
