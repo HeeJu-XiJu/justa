@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import PostForm, CommentForm
+from .forms import PostForm
 from .models import Post, Comment
 
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
-    commentform = CommentForm()
     context = {
         'posts': posts,
-        'commentform': commentform,
     }
     return render(request, 'index.html', context)
 
@@ -60,4 +58,10 @@ def comment_create(request,post_id):
     comment.user_id = request.user.id
     comment.post_id = post_id
     comment.save()
+    return redirect('posts:index')
+
+
+def comment_delete(request, post_id, id):
+    comment = Comment.objects.get(id=id)
+    comment.delete()
     return redirect('posts:index')

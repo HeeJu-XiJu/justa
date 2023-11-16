@@ -1,24 +1,26 @@
 {% load bootstrap5 %}
 
-<div class="card my-3 col-12 col-md-5 mx-2">
-    <div class="card-header">
-        <img src="{{ post.user.profile.url }}" alt="" class="rounded-circle" width="30px">
-        {{ post.user }}
-        <a href="{% url 'posts:delete' id=post.id %}" class="btn btn-light">delete</a>
-        <a href="{% url 'posts:update' id=post.id %}" class="btn btn-light">update</a>
-    </div>
-    <img src="{{ post.image.url }}" alt="">
-    <div class="card-body">
-        <p>{{ post.content }}</p>
-        <form action="{% url 'posts:comment_create' post_id=post.id %}" method="POST">
-            {% csrf_token %}
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="comment" aria-label="comment" aria-describedby="basic-addon1" name="comment" id="comment">
-                <input type="submit" class="input-group-text" id="basic-addon1" value="submit"></span>
-            </div>
-        </form>
-        {% for comment in post.comment_set.all %}
-            {% include '_commentcard.html' %}
-        {% endfor %}
+<div class="d-flex flex-row justify-content-around">
+    <div class="card my-3 col-12 col-md-5">
+        <div class="card-header">
+            <img src="{{ post.user.profile.url }}" alt="" class="rounded-circle" width="30px">
+            {{ post.user }}
+            <a href="{% url 'posts:delete' id=post.id %}" class="btn btn-light">delete</a>
+            <a href="{% url 'posts:update' id=post.id %}" class="btn btn-light">update</a>
+        </div>
+        <img src="{{ post.image.url }}" alt="">
+        <div class="card-body">
+            <p>{{ post.content }}</p>
+            <form action="{% url 'posts:comment_create' post_id=post.id %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="comment" aria-label="comment" aria-describedby="basic-addon1" name="comment" id="comment">
+                    <input type="submit" class="input-group-text" value="submit"></span>
+                </div>
+            </form>
+            {% for comment in post.comment_set.all %}
+                {% include '_commentcard.html' %}
+            {% endfor %}
+        </div>
     </div>
 </div>
