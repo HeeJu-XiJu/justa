@@ -17,5 +17,8 @@
                 <input type="submit" class="input-group-text" id="basic-addon1" value="submit"></span>
             </div>
         </form>
+        {% for comment in post.comment_set.all %}
+            {% include '_commentcard.html' %}
+        {% endfor %}
     </div>
 </div>
